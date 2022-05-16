@@ -1,15 +1,17 @@
-FROM python:3.9
+# Pull base image
+FROM python:3.8
+
+# Set environment variables
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /webapps
-WORKDIR /webapps
-# Installing OS Dependencies
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-libsqlite3-dev
-RUN pip install -U pip setuptools
-COPY requirements.txt /webapps/
-COPY requirements-opt.txt /webapps/
-RUN pip install -r /webapps/requirements.txt
-RUN pip install -r /webapps/requirements-opt.txt
-ADD . /webapps/
-# Django service
-EXPOSE 8000
+
+# Set work directory
+WORKDIR /code
+
+# Install dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy project
+COPY . .

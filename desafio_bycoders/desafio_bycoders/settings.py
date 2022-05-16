@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-qt(1xx$__+723mom9ulnuqn17x!mvshmob&(c2$$v$p7hux_$+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,21 +77,12 @@ WSGI_APPLICATION = 'desafio_bycoders.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-else:
-    DATABASES = {
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'postgres',
             'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': 'db',
+            'HOST': '127.0.0.1',
             'PORT': 5432,
         }
     }
