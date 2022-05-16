@@ -6,7 +6,14 @@
 <div class="item">
     <form action="/operations_list/" method="POST" enctype="multipart/form-data" id="form-id">
     {% csrf_token %}
-        {{ form }}
+        <label for="id_store">Selecione uma loja:</label>
+        <select class="select-field" name="store" id="id_store" onChange="submitStore();">
+            <option value=""></option>
+            <option value="">Todas</option>
+        {% for store in store_names %}
+            <option value="{{ store.nome_loja }}">{{ store.nome_loja }}</option>
+        {% endfor %}
+        </select>
     </form>
 </div>
 <table>
@@ -46,7 +53,7 @@
             </div>
         {% endif %}
         <script>
-            document.getElementById('id_store').onchange = function() {
+            function submitStore() {
                 document.getElementById('form-id').submit();
             };
             </script>

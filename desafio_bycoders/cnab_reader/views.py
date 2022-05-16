@@ -1,11 +1,11 @@
-from django.shortcuts import render, HttpResponseRedirect
+
 from django.views.generic import DetailView, FormView
-from django.urls import reverse_lazy
 from .forms import uploadForm, StoreFilter
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.utils.decorators import method_decorator
 from .use_cases.cnab_reader_use_case import CnabReaderUseCase
 from .use_cases.operations_list_use_case import OperationsListUseCase
+from .models import cnabModel
 
 
 
@@ -36,6 +36,7 @@ class OperationsListMixin(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['operations'], context['total'] = self.use_case.execute(self.store_name)
+        context['store_names'] = cnabModel.objects.all().values('nome_loja').distinct()
         return context
 
     def form_valid(self, form):
@@ -48,8 +49,10 @@ class OperationsListIndex(OperationsListMixin):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         if form.is_valid():
-            self.cpf = form.cleaned_data['store']
-            context['operations'], context['total'] = self.use_case.execute(self.cpf)
+            print('form valido')
+            self.store_name = form.cleaned_data['store']
+            print(self.store_name)
+            context['operations'], context['total'] = self.use_case.execute(self.store_name )
             return self.render_to_response(context)
         else:
             return self.form_invalid(form)
