@@ -15,8 +15,8 @@ class CnabFormatter():
                 'cpf': line[19:30],
                 'cartao': line[30:42],
                 'hora_transacao': datetime.time(int(line[42:44]), int(line[44:46]), int(line[46:48])),
-                'nome_dono_loja': line[48:62],
-                'nome_loja': line[62:81],
+                'nome_dono_loja': line[48:62].strip(),
+                'nome_loja': line[62:81].strip(),
             }
 
 
@@ -55,9 +55,7 @@ class CnabFormatter():
 
     def __transaction_in_out(self, transaction_type, value):
         if transaction_type in [2,3,9]:
-            print('negativo')
             return value
         else:
-            print('positivo')
             return abs(value)
         

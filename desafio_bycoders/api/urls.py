@@ -14,10 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from .views import CnabReaderAPIView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('cnab_reader.urls')),
-    path('api/', include('api.urls')),
+    path('cnab/', CnabReaderAPIView.as_view(), name='cnab_reader_api'),
+    path('cnab/<str:nome_loja>', CnabReaderAPIView.as_view(), name='cnab_reader_api_filter'),
 ]

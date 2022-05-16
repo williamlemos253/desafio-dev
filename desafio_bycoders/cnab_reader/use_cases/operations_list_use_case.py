@@ -8,4 +8,4 @@ class OperationsListUseCase:
         if store_name:
             return self.repository.get_transaction_by_store_name(store_name)
         else:
-            return self.repository.get_all_transactions()
+            return self.repository.get_all_transactions(), None

@@ -19,9 +19,6 @@ class CnabRepository():
             formatted_query = formatted_query + [item]
         return formatted_query
 
-    def get_transaction_by_id(self, id):
-        return self.cnab_model.objects.get(id=id)
-
     def get_transaction_by_store_name(self, store_name):
         query = self.cnab_model.objects.filter(nome_loja=store_name).order_by('nome_loja')
         query_total_value = query.aggregate(Sum('valor'))

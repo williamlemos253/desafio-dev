@@ -35,7 +35,7 @@ class OperationsListMixin(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['operations'] = self.use_case.execute(self.store_name)
+        context['operations'], context['total'] = self.use_case.execute(self.store_name)
         return context
 
     def form_valid(self, form):
